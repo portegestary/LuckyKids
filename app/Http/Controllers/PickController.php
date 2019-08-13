@@ -118,9 +118,9 @@ class PickController extends Controller
 	private static function getGoogleAPIServiceAccountClient()
 	{
 		$storagePrefix = Storage::disk('local')->getAdapter()->getPathPrefix();
-		putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $storagePrefix . 'cred/LuckyKids-e8131d77171c.json');
 		$client = new Google_Client();
-		$client->useApplicationDefaultCredentials();
+        $client->setAuthConfig(env('YOUTUBE_CRED_JSON'));
+        $client->useApplicationDefaultCredentials();
 		$client->addScope(Google_Service_YouTube::YOUTUBE_FORCE_SSL);
 		$client->setRedirectUri('http://127.0.0.1:8000/comments/');
 		return $client;
