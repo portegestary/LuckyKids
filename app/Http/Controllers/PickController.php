@@ -119,6 +119,8 @@ class PickController extends Controller
 	{
 		$client = new Google_Client();
         Storage::disk('local')->put('cred.json', file_get_contents(env('YOUTUBE_CRED_JSON')));
+        logger(Storage::disk('local')->getAdapter()->getPathPrefix() . 'cred.json');
+        logger(file_get_contents(env('YOUTUBE_CRED_JSON')));
         $client->setAuthConfig(Storage::disk('local')->getAdapter()->getPathPrefix() . 'cred.json');
         $client->useApplicationDefaultCredentials();
 		$client->addScope(Google_Service_YouTube::YOUTUBE_FORCE_SSL);
