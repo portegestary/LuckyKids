@@ -119,9 +119,10 @@ class PickController extends Controller
 	{
 		$client = new Google_Client();
         Storage::disk('local')->put('cred.json', file_get_contents(env('YOUTUBE_CRED_JSON')));
-        print_r(Storage::disk('local')->files());
-        dd(Storage::disk('local')->directories());
-        $client->setAuthConfig('private/cred.json');
+        print_r(Storage::disk('local')->url('cred.json'));
+        print_r(Storage::disk('local')->get('cred.json'));
+
+        $client->setAuthConfig(Storage::disk('local')->url('cred.json'));
         $client->useApplicationDefaultCredentials();
 		$client->addScope(Google_Service_YouTube::YOUTUBE_FORCE_SSL);
 		$client->setRedirectUri('http://127.0.0.1:8000/comments/');
