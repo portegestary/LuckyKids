@@ -118,6 +118,14 @@ class PickController extends Controller
 	private static function getGoogleAPIServiceAccountClient()
 	{
 		$client = new Google_Client();
+		print_r(Storage::disk('local')->files());
+		print_r('\n');
+        print_r(Storage::disk('local')->allFiles());
+        print_r('\n');
+        print_r(Storage::disk('local')->directories());
+        print_r('\n');
+        print_r(Storage::disk('local')->allDirectories());
+        print_r('\n');
         $client->setAuthConfig(Storage::disk('local')->getAdapter()->getPathPrefix() . 'private/cred.json');
         $client->useApplicationDefaultCredentials();
 		$client->addScope(Google_Service_YouTube::YOUTUBE_FORCE_SSL);
