@@ -119,13 +119,7 @@ class PickController extends Controller
 	private static function getGoogleAPIServiceAccountClient()
 	{
 		$client = new Google_Client();
-        $options = ['gs' => ['acl' => 'public-read']];
-        $context = stream_context_create($options);
-        $fileName = "gs://luckykids.appspot.com/LuckyKids-e8131d77171c.json";
-        dd(CloudStorageTools::serve($fileName));
-
-
-        $client->setAuthConfig(Storage::disk('local')->getAdapter()->getPathPrefix() . 'private/cred.json');
+        $client->setAuthConfig(env('SERVICE_ACCOUNT_CRED'));
         $client->useApplicationDefaultCredentials();
 		$client->addScope(Google_Service_YouTube::YOUTUBE_FORCE_SSL);
 		return $client;
