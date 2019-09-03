@@ -7,6 +7,7 @@ use Redirect;
 use Google_Client;
 use Google_Service_YouTube;
 use Storage;
+use google\appengine\api\cloud_storage\CloudStorageTools;
 
 class PickController extends Controller
 {
@@ -118,14 +119,12 @@ class PickController extends Controller
 	private static function getGoogleAPIServiceAccountClient()
 	{
 		$client = new Google_Client();
-		print_r(Storage::disk('local')->files());
-		print_r('\n');
-        print_r(Storage::disk('local')->allFiles());
-        print_r('\n');
-        print_r(Storage::disk('local')->directories());
-        print_r('\n');
-        print_r(Storage::disk('local')->allDirectories());
-        print_r('\n');
+        $options = ['gs' => ['acl' => 'public-read']];
+        $context = stream_context_create($options);
+        $fileName = "gs://luckykids.appspot.com/LuckyKids-e8131d77171c.json";
+        dd(CloudStorageTools::serve($fileName));
+
+
         $client->setAuthConfig(Storage::disk('local')->getAdapter()->getPathPrefix() . 'private/cred.json');
         $client->useApplicationDefaultCredentials();
 		$client->addScope(Google_Service_YouTube::YOUTUBE_FORCE_SSL);
